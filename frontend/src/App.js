@@ -12,6 +12,15 @@ import axios from 'axios';
 
 class App extends Component {
 
+
+    constructor(props){
+        super(props)
+        this.state={message:"No message"}
+        this.handleClick = this.handleClick.bind(this);
+        this.handleClickAdminOnly = this.handleClickAdminOnly.bind(this);
+
+    }
+
     handleClick(e){
         console.log("Secured click");
 
@@ -19,6 +28,10 @@ class App extends Component {
                 .then(response => {
                     // JSON responses are automatically parsed.
                     console.log(response.data)
+                    this.setState({
+                        message:response.data.message
+                    })
+
                 })
                 .catch(e => {
                     console.log(e.toString())
@@ -27,7 +40,21 @@ class App extends Component {
     }
 
     handleClickAdminOnly(e){
-        console.log("Admin Only click");
+        axios.get('http://localhost:8000/jwt-secure/admin')
+                .then(response => {
+                    // JSON responses are automatically parsed.
+                    console.log(response.data)
+                    this.setState({
+                        message:response.data.message
+                    })
+
+                })
+                .catch(e => {
+
+                    this.setState({
+                        message:e.toString()
+                    })
+                })
     }
 
 
@@ -46,7 +73,9 @@ class App extends Component {
 
             <button onClick={this.handleClickAdminOnly}>
                   Admin Only
-            </button>
+        </button>
+
+            <p>Welcome {this.state.message}</p>
 
       </div>
     );

@@ -1,2 +1,39 @@
 * kong-jwt-keycloak
 Kong JWT Keycloak example
+** Backend API
+Our backend is a SpringBoot App that can be buid and run with maven :
+*** Maven
+ #+BEGIN_SRC shell :dir ./backend
+ mvn spring-boot:run
+ #+END_SRC
+*** Docker setup
+
+It's also possible to run the backend with Docker
+#+BEGIN_SRC shell :dir ./backend
+mvn spring-boot:run
+#+END_SRC
+
+And then, you can build the docker image
+#+BEGIN_SRC shell :dir ./backend :results output silent
+docker build -t backend .
+ #+END_SRC
+
+The next command will create a container using the =backend= image we created above.
+
+#+BEGIN_SRC shell
+docker run -d --name backend \
+    --net oidc-example-bridge \
+    backend:latest
+#+END_SRC
+
+#+RESULTS:
+: ea03bf15786efa72db20bfb4b94f7f1180979ad6be13b32735fc571540a33415
+
+*** Endpoints
+
+Once the backend App is running two endpoints are available :
+- http://localhost:9000/secured for all authenticated users
+- http://localhost:9000/admin for admin users only
+** Keycloak setup
+** Kong setup
+** Frontend
