@@ -38,7 +38,7 @@ axios.interceptors.request.use(config => {
 
 
 //need to wrap the KC "promise object" into a real Promise object
-const refreshToken = (minValidity = 5) => {
+const refreshToken = (minValidity = 3000) => {
     return new Promise((resolve, reject) => {
         console.log("Bla Bla")
     kc.updateToken(minValidity)
